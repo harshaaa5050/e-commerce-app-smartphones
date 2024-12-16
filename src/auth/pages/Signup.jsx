@@ -5,8 +5,8 @@ import icon from '../../../public/assets/icon.png'
 
 const Signup = () => {
   return (
-    <div className='h-screen flex items-center justify-center'>
-      <div className='bg-transparent/25 w-1/4 h-[530px] rounded-2xl flex flex-col items-center justify-between'>
+    <div className='loginsignup_background h-screen flex items-center justify-center'>
+      <div className='bg-transparent/25 h-[530px] sm:w-[350px] lg:w-[400px] rounded-2xl flex flex-col items-center justify-between'>
         <div className='bg-transparent flex flex-col items-center w-full'>
 
           <img src={icon} alt="logo" className='w-16 mt-10' />
