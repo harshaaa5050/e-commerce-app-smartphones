@@ -55,31 +55,6 @@ const UserNavbar = () => {
                     </div>
                 </div>
 
-                {/* right side of navbar for smaller devices */}
-
-                {/* <div className='flex items-center justify-between shrink-0 gap-2 sm:hidden'>
-
-                    orders icon
-                    <NavLink to='/orders' className='flex items-center justify-between hover:-translate-y-0.5'>
-                        <img src={orders} alt="orders" className='w-6' />
-                    </NavLink>
-
-                    cart icon
-                    <NavLink to='/cart' className='flex items-center justify-between hover:-translate-y-0.5'>
-                        <img src={cart_icon} alt="cart" className='w-6' />
-                    </NavLink>
-
-                    account symbol
-                    <div className='flex items-center justify-between'>
-                        <img src={account} alt="account" className='w-6' />
-                    </div>
-
-                    logout button
-                    <div className='flex items-center justify-between'>
-                        <NavLink to="/login" className='w-16 h-10 flex items-center justify-center font-medium rounded-2xl bg-pink-300 hover:bg-pink-400'>Logout</NavLink>
-                    </div>
-                </div> */}
-
             </div>
 
             {/* searchbar for small devices */}
