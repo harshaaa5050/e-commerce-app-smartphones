@@ -8,7 +8,7 @@ import orders from '../../public/assets/orders.png'
 
 const UserNavbar = () => {
     return (
-        <nav className='flex-col shadow-md p-2'>
+        <nav className='flex-col shadow-md p-2 w-full fixed bg-white'>
             <div className='flex justify-between items-center'>
                 {/* logo and name */}
                 <div className='flex items-center'>
