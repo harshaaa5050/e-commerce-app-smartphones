@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import icon from '../../public/assets/icon.png'
 import cart_icon from '../../public/assets/cart_icon.png'
 import search from '../../public/assets/search.png'
@@ -7,11 +7,14 @@ import account from '../../public/assets/account.png'
 import orders from '../../public/assets/orders.png'
 
 const UserNavbar = () => {
+
+    const navigate = useNavigate();
+
     return (
         <nav className='flex-col shadow-md p-2 w-full fixed bg-white'>
             <div className='flex justify-between items-center'>
                 {/* logo and name */}
-                <div className='flex items-center'>
+                <div className='flex items-center cursor-pointer' onClick={()=>{navigate('/')}}>
                     <img className='w-10 p-1' src={icon} alt="logo" />
                     <h1 className='text-2xl font-semibold font-serif p-1'>SmartKart</h1>
                 </div>
