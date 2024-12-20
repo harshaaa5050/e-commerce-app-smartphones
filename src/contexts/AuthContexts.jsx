@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { addUser, checkUser, checkUsername } from '../api/userApi';
 
@@ -7,6 +7,16 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState();
+
+    useEffect(() =>{
+        const storedUser = localStorage.getItem("user");
+        const storedAdmin = localStorage.getItem("admin");
+        if (storedUser){
+            setUser(JSON.parse(storedUser));
+        } else if (storedAdmin){
+            setUser(JSON.parse(storedAdmin));
+        }
+    },[])
 
     const userSignup = async (newUser) => {
         try {
@@ -21,6 +31,15 @@ export const AuthProvider = ({ children }) => {
             }
 
             const response = await addUser(newUser);
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify({
+                    userId : response.data.id,
+                    username : response.data.username
+                })
+            );
+
             setUser(response.data);
             setTimeout(() => {
                 navigate("/");
@@ -31,6 +50,13 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const userLogin = async ({username, password}) =>{
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
 
 
 
