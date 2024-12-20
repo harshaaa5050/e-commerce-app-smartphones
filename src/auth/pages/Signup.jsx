@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import '../../styles/style.css'
 import icon from '../../../public/assets/icon.png'
-import { fetchUsers } from '../../api/userApi'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 const Signup = () => {
@@ -13,8 +12,6 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [userData, setUserData] = useState(null);
-  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
