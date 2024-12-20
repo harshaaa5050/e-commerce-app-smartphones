@@ -3,6 +3,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import UserNavbar from '../../components/UserNavbar';
 import Footer from '../../components/Footer';
 import axios from 'axios';
+import { fetchProductsById } from '../../api/productApi';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -13,11 +14,11 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/products/${id}`);
+                const response = await fetchProductsById(id);
                 setProduct(response.data);
-            } catch (err) {
-                setError('Failed to fetch product details.');
-            } finally {
+            } catch (error) {
+                setError("Failed to fetch product details");
+            } finally{
                 setLoading(false);
             }
         };
@@ -48,7 +49,7 @@ const ProductDetails = () => {
     return (
         <>
             <UserNavbar />
-            <div className="min-h-screen pt-24 md:pt-14 p-6">
+            <div className="min-h-screen pt-24 md:pt-20 p-6">
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
                     <div className='w-1/3 flex items-center justify-center self-center'>
                         <img
