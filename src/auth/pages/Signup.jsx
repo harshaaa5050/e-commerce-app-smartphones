@@ -1,20 +1,53 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import '../../styles/style.css'
 import icon from '../../../public/assets/icon.png'
+import { fetchUsers } from '../../api/userApi'
+import { AuthContext } from '../../contexts/AuthContexts'
 
 const Signup = () => {
+
+  const { userSignup } = useContext(AuthContext);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!email || !username || !password) {
+      setError("Please fill in all the fields");
+      return;
+    }
+
+    try {
+      const newUser = { email: email, username: username, password: password, role: "user", block: false };
+      await userSignup(newUser);
+      setSuccess("Signup successful");
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
     <div className='loginsignup_background h-screen flex items-center justify-center'>
       <div className='bg-transparent/25 h-[530px] sm:w-[350px] lg:w-[400px] rounded-2xl flex flex-col items-center justify-between'>
         <div className='bg-transparent flex flex-col items-center w-full'>
 
           <img src={icon} alt="logo" className='w-16 mt-10' />
-          <form className='flex flex-col justify-center gap-4 p-10 font-medium w-full'>
-            <input type="email" placeholder="Enter email" className='border border-black outline-black rounded-lg h-10 p-4' />
-            <input type="text" placeholder="Enter username" className='border border-black outline-black rounded-lg h-10 p-4' />
-            <input type="password" placeholder="Enter password" className='border border-black outline-black rounded-lg h-10 p-4' />
+          <form onSubmit={handleSignup} className='flex flex-col justify-center gap-4 p-10 font-medium w-full'>
+            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email" className='border border-black outline-black rounded-lg h-10 p-4' />
+            <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" className='border border-black outline-black rounded-lg h-10 p-4' />
+            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" className='border border-black outline-black rounded-lg h-10 p-4' />
 
+            {error && <p className="text-red-900">{error}</p>}
+            {success && <p className="text-green-900">{success}</p>}
 
             <input type="submit" value="Sign Up" className='border bg-blue-300 h-11 rounded-lg outline-black border-black mt-5 cursor-pointer hover:bg-blue-400' />
           </form>
