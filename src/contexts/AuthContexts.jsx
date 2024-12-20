@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { addUser, checkUser, checkUsername } from '../api/userApi';
+import { addUser, checkUser, checkUsername, fetchUsers } from '../api/userApi';
 
 export const AuthContext = createContext();
 
@@ -52,16 +52,39 @@ export const AuthProvider = ({ children }) => {
 
     const userLogin = async ({username, password}) =>{
         try {
-            
+            const {data: users} = await fetchUsers();
+
+            const findUser = users.find((user) => user.username === username && user.password === password);
+
+            if(!findUser){
+                throw new Error('Invalid username or password');
+            }
+            if(findUser.block){
+                throw new Error('Your account is blocked');
+            }
+
+            localStorage.setItem(
+                findUser.role,
+                JSON.stringify({
+                    userId : findUser.id,
+                    username : findUser.username
+                })
+            );
+
+            setUser(findUser);
+            setTimeout(() => {
+                navigate("/");
+            },2000);
+
         } catch (error) {
-            
+            throw error;
         }
     }
 
 
 
     return (
-        <AuthContext.Provider value={{ user, userSignup }}>
+        <AuthContext.Provider value={{ user, userSignup, userLogin }}>
             {children}
         </AuthContext.Provider>
     );
