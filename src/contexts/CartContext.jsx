@@ -6,7 +6,7 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState(null);
     const userId = localStorage.getItem("user");
     const { user } = useContext(AuthContext);
 
@@ -22,6 +22,8 @@ export const CartProvider = ({ children }) => {
                 }
             };
             fetchData();
+        } else {
+            setCartItems([]);
         }
     }, [user]);
 
@@ -49,9 +51,8 @@ export const CartProvider = ({ children }) => {
         updateCartData(updatedData)
     };
 
-
     const removeFromCart = (id) => {
-        const removedCart = cartItems.filter((item) => item.id !== id);
+        const removedCart = cartItems.filter((cartItem) => cartItem.id !== id);
         updateCartData(removedCart);
     };
 
@@ -59,18 +60,16 @@ export const CartProvider = ({ children }) => {
         const newQuantity = cartItems.map((product) => {
             return product.id === productId ? { ...product, quantity } : product
         })
-
         updateCartData(newQuantity);
     };
 
-    const totalPrice = cartItems.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-    );
+    const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  
 
     return (
         <CartContext.Provider
-            value={{ cartItems, addToCart, removeFromCart, updateQuantity, totalPrice }}>
+            value={{ cartItems, addToCart, removeFromCart, updateQuantity, totalPrice}}
+        >
             {children}
         </CartContext.Provider>
     );
