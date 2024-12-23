@@ -10,7 +10,9 @@ import { AuthContext } from '../contexts/AuthContexts'
 const UserNavbar = () => {
 
     const navigate = useNavigate();
-    const {user, logout} = useContext(AuthContext);
+    const { logout} = useContext(AuthContext);
+    const user = localStorage.getItem("user");
+    const username = localStorage.getItem("username");
 
     return (
         <nav className='flex-col shadow-md p-2 w-full fixed bg-white'>
@@ -41,7 +43,7 @@ const UserNavbar = () => {
                        
                         <div className='flex items-center justify-between cursor-pointer'>
                             <img src={account} alt="account" className='w-7' />
-                            <h2 className='font-semibold sm:flex hidden'>Username</h2>
+                            <h2 className='font-semibold sm:flex hidden'>{username.length > 9 ? `${username.slice(0,9)}...` : username }</h2>
                         </div>
 
                         <div className='absolute opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 right-0 bg-white border border-gray-300 rounded-lg shadow-lg pt-2 w-32'>
@@ -51,8 +53,6 @@ const UserNavbar = () => {
                                 <img src={orders} alt="orders" className='w-7' />
                                 <h2 className='font-semibold'>Orders</h2>
                             </NavLink>
-
-
 
                             
                             <div className='flex items-center justify-center px-4 py-2'>
