@@ -43,10 +43,11 @@ const Signup = () => {
             <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Enter username" className='border border-black outline-black rounded-lg h-10 p-4' />
             <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password" className='border border-black outline-black rounded-lg h-10 p-4' />
 
+            <input type="submit" value="Sign Up" className='border bg-blue-300 h-11 rounded-lg outline-black border-black mt-5 cursor-pointer hover:bg-blue-400' />
+
             {error && <p className="text-red-900">{error}</p>}
             {success && <p className="text-green-900">{success}</p>}
-
-            <input type="submit" value="Sign Up" className='border bg-blue-300 h-11 rounded-lg outline-black border-black mt-5 cursor-pointer hover:bg-blue-400' />
+            
           </form>
 
         </div>
