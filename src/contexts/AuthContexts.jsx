@@ -7,16 +7,6 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
-    // useEffect(() => {
-    //     const storedUser = localStorage.getItem("user");
-    //     const storedAdmin = localStorage.getItem("admin");
-    //     if (storedUser) {
-    //         setUser({ ...storedUser, role: 'user' });
-    //     } else if (storedAdmin) {
-    //         setUser({ ...storedAdmin, role: 'admin' });
-    //     }
-    // }, []);
-
     const userSignup = async (userData) => {
         try {
             const emailExist = await checkUser(userData.email);
