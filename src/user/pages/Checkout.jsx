@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../contexts/CartContext';
+import { addNewOrder } from '../../api/orderApi';
 
 const Checkout = () => {
     const [formData, setFormData] = useState({
@@ -24,20 +26,7 @@ const Checkout = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
 
-    const [cartItems] = useState([
-        {
-            id: 9,
-            name: 'Nothing Phone (2)',
-            price: 44999,
-            quantity: 1,
-        },
-        {
-            id: 10,
-            name: 'Motorola Edge 40 Pro',
-            price: 79999,
-            quantity: 2,
-        },
-    ]);
+    const { cartItems, clearCart } = useContext(CartContext);
 
     const totalPrice = cartItems.reduce(
         (total, item) => total + item.price * item.quantity,
@@ -58,9 +47,23 @@ const Checkout = () => {
         setPaymentMethod(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setSuccessMessage('Order Placed Successfully!');
+        const newOrder = {
+            id: Date.now().toString(),
+            userId: localStorage.getItem("user"),
+            paymentMethod: paymentMethod,
+            paymentDetails: paymentDetails,
+            address: formData,
+            orderStatus: "Not Delivered",
+            paymentStatus: "Paid",
+            date: Date(),
+            products: cartItems,
+            total : totalPrice
+        }
+        await addNewOrder(newOrder);
+        clearCart();
         setTimeout(() => {
             setSuccessMessage('');
             navigate('/orders');
