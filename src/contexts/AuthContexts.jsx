@@ -62,26 +62,32 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("role", foundedUser.role);
 
             setUser(foundedUser);
-            setTimeout(() => {
-                navigate("/");
-            }, 1000);
+            if (foundedUser.role === "user"){
+                setTimeout(() => {
+                    navigate("/");
+                }, 1000);
+            } else if(foundedUser.role ==="admin"){
+                setTimeout(() => {
+                    navigate("/dashboard");
+                }, 1000);
+            }
 
         } catch (error) {
-            throw error;
-        }
-    };
+        throw error;
+    }
+};
 
-    const logout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("username");
-        localStorage.removeItem("role");
-        setUser(null);
-        navigate('/');
-    };
+const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
+    setUser(null);
+    navigate('/');
+};
 
-    return (
-        <AuthContext.Provider value={{ user, userSignup, userLogin, logout }} >
-            {children}
-        </AuthContext.Provider>
-    )
+return (
+    <AuthContext.Provider value={{ user, userSignup, userLogin, logout }} >
+        {children}
+    </AuthContext.Provider>
+)
 };
