@@ -18,10 +18,6 @@ const Dashboard = () => {
                         <p className="text-3xl font-bold text-green-600">₹5,40,075.00</p>
                     </div>
                     <div className="bg-white shadow-md rounded-lg p-4">
-                        <h2 className="text-lg font-semibold">Total Deliveries</h2>
-                        <p className="text-3xl font-bold text-purple-600">110</p>
-                    </div>
-                    <div className="bg-white shadow-md rounded-lg p-4">
                         <h2 className="text-lg font-semibold">Total Users</h2>
                         <p className="text-3xl font-bold text-indigo-600">250</p>
                     </div>
@@ -29,10 +25,7 @@ const Dashboard = () => {
                         <h2 className="text-lg font-semibold">Total Products</h2>
                         <p className="text-3xl font-bold text-orange-600">75</p>
                     </div>
-                    <div className="bg-white shadow-md rounded-lg p-4">
-                        <h2 className="text-lg font-semibold">Pending Orders</h2>
-                        <p className="text-3xl font-bold text-red-600">10</p>
-                    </div>
+
                 </div>
 
                 {/* Orders Overview */}
