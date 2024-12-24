@@ -1,8 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminNavbar from '../../components/AdminNavbar';
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { addNewProduct, fetchAllProducts } from "../../api/productApi";
 
 const AddProducts = () => {
+    const navigate = useNavigate();
+    const [allProducts, setAllProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetchAllProducts();
+                setAllProducts(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchProducts();
+    }, []);
+
     const [formData, setFormData] = useState({
         name: "",
         brand: "",
@@ -16,7 +32,7 @@ const AddProducts = () => {
         camera: "",
         battery: "",
         storage: "",
-        os: "",
+        os: ""
     });
 
     const handleChange = (e) => {
@@ -24,10 +40,29 @@ const AddProducts = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form Data Submitted: ", formData);
-        // Add logic to send data to backend or update state
+        const newProduct = {
+            id: allProducts.length +1,
+            name: formData.name,
+            brand: formData.brand,
+            price: formData.price,
+            image: formData.image,
+            rating: formData.rating,
+            description: formData.description,
+            specification: {
+                display: formData.display,
+                processor: formData.processor,
+                ram: formData.ram,
+                camera: formData.camera,
+                battery: formData.battery,
+                storage: formData.storage,
+                os: formData.os
+            }
+        }
+        await addNewProduct(newProduct);
+        setTimeout(() => navigate("/admin/manageproducts"), 1000);
     };
 
     return (
@@ -159,13 +194,12 @@ const AddProducts = () => {
 
                         {/* Submit Button */}
                         <div className="text-center">
-                            <NavLink
-                                to={'/admin/manageproducts'}
+                            <button
                                 type="submit"
-                                className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700"
+                                className="bg-pink-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-pink-700"
                             >
                                 Add Product
-                            </NavLink>
+                            </button>
                         </div>
                     </form>
                 </div>
