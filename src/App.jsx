@@ -10,29 +10,33 @@ import { CartProvider } from './contexts/CartContext'
 import UserRoutes from './user/routes/UserRoutes'
 import AdminProtectedRoutes from './admin/routes/AdminProtectedRoutes'
 import AdminRoutes from './admin/routes/AdminRoutes'
+import Dashboard from './admin/pages/Dashboard'
+import { AdminProvider } from './contexts/AdminContext'
 
 const App = () => {
   return (
 
     <AuthProvider>
       <CartProvider>
-        <Routes>
+        <AdminProvider>
+          <Routes>
 
-          {/* public routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
+            {/* public routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
 
-          <Route element={<UserProtectedRoutes/>}>
-            {UserRoutes.map(({path, element},index) => (<Route key={index} path={path} element={element}/>))}
-          </Route>
+            <Route element={<UserProtectedRoutes />}>
+              {UserRoutes.map(({ path, element }, index) => (<Route key={index} path={path} element={element} />))}
+            </Route>
 
-          <Route element={<AdminProtectedRoutes/>}>
-            {AdminRoutes.map(({path, element},index) => (<Route key={index} path={path} element={element}/>))}
-          </Route>
+            <Route element={<AdminProtectedRoutes />}>
+              {AdminRoutes.map(({ path, element }, index) => (<Route key={index} path={path} element={element} />))}
+            </Route>
 
-        </Routes>
+          </Routes>
+        </AdminProvider>
       </CartProvider>
     </AuthProvider>
   )
