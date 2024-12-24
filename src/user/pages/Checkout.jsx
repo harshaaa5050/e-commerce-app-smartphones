@@ -4,6 +4,14 @@ import { CartContext } from '../../contexts/CartContext';
 import { addNewOrder } from '../../api/orderApi';
 
 const Checkout = () => {
+    const { cartItems, clearCart } = useContext(CartContext);
+    const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
+
+    if(cartItems.length === 0){
+        navigate('/cart');
+    }
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,10 +31,7 @@ const Checkout = () => {
         upiId: '',
     });
 
-    const [successMessage, setSuccessMessage] = useState('');
-    const navigate = useNavigate();
 
-    const { cartItems, clearCart } = useContext(CartContext);
 
     const totalPrice = cartItems.reduce(
         (total, item) => total + item.price * item.quantity,
