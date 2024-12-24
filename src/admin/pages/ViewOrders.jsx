@@ -50,9 +50,6 @@ const ViewOrders = () => {
                     <td className="p-3">₹{order.total}</td>
                     <td className="p-3">{order.orderStatus}</td>
                     <td className="p-3">
-                      <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-2">
-                        Update
-                      </button>
                       <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
                         Cancel
                       </button>
