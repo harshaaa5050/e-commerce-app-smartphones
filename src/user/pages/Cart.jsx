@@ -14,6 +14,7 @@ const Cart = () => {
       <UserNavbar />
       <div className="min-h-screen flex flex-col pt-10">
         <div className="container mx-auto p-6">
+          {cartItems.length > 0 &&
           <div className="mt-6">
             <h2 className="text-xl font-bold">Total Price: ₹{totalPrice}</h2>
             <div className="mt-4 flex gap-4">
@@ -30,7 +31,7 @@ const Cart = () => {
                 Continue Shopping
               </NavLink>
             </div>
-          </div>
+          </div>}
 
           <h1 className="text-3xl font-bold mt-6 mb-4">Your Cart</h1>
           {cartItems.length > 0 ? (
