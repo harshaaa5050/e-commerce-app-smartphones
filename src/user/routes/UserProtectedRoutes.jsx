@@ -1,14 +1,9 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from "react-router-dom";
 
-const UserProtectedRoutes = ({ children }) => {
-
-    const user = localStorage.getItem('user');
-    if (!user) {
-        return <Navigate to="/login" replace />;
-    }
-
-    return children;
+const UserProtectedRoutes = () => {
+    const isAuthenticated = localStorage.getItem("user");
+    if(!isAuthenticated) alert("Please Login to continue");
+    return isAuthenticated ? <Outlet/> : <Navigate to = "/login"/>;
 }
 
 export default UserProtectedRoutes
