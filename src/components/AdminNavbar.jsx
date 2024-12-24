@@ -47,7 +47,7 @@ const AdminNavbar = () => {
                         {/* account symbol and name */}
                         <div className='flex items-center justify-between cursor-pointer'>
                             <img src={account} alt="account" className='w-7' />
-                            <h2 className='font-semibold sm:flex hidden'>Username</h2>
+                            <h2 className='font-semibold sm:flex hidden'>Admin</h2>
                         </div>
                         <div className='absolute opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 right-0 bg-white border border-gray-300 rounded-lg shadow-lg pt-2 w-32'>
                             {/* logout button */}
