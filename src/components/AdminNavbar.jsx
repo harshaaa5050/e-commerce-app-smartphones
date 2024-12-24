@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import icon from '../../public/assets/icon.png'
 import account from '../../public/assets/account.png'
 import orders from '../../public/assets/orders.png'
 import users from '../../public/assets/users.png'
 import products from '../../public/assets/products.png'
+import { AuthContext } from '../contexts/AuthContexts'
 
 const AdminNavbar = () => {
     const navigate = useNavigate();
+    const {logout} = useContext(AuthContext);
 
     return (
         <nav className='flex-col shadow-md p-2 bg-purple-200 fixed w-full'>
@@ -35,7 +37,7 @@ const AdminNavbar = () => {
                     </NavLink>
 
                     {/* orders icon and name */}
-                    <NavLink to='/admin/manageorders' className='flex items-center justify-center gap-1 text-black hover:bg-purple-300 hover:rounded-full px-2 py-2'>
+                    <NavLink to='/admin/vieworders' className='flex items-center justify-center gap-1 text-black hover:bg-purple-300 hover:rounded-full px-2 py-2'>
                         <img src={orders} alt="orders" className='w-7' />
                         <h2 className='font-semibold sm:flex hidden'>Orders</h2>
                     </NavLink>
@@ -50,7 +52,7 @@ const AdminNavbar = () => {
                         <div className='absolute opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 right-0 bg-white border border-gray-300 rounded-lg shadow-lg pt-2 w-32'>
                             {/* logout button */}
                             <div className='flex items-center justify-center px-4 py-2'>
-                                <NavLink className='w-32 h-10 flex items-center justify-center font-medium rounded-2xl bg-pink-300 hover:bg-pink-400'>Logout</NavLink>
+                                <button onClick={logout} className='w-32 h-10 flex items-center justify-center font-medium rounded-2xl bg-pink-300 hover:bg-pink-400'>Logout</button>
                             </div>
                         </div>
 
