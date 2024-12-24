@@ -72,12 +72,7 @@ const ProductDetails = () => {
                                 <button onClick={() => user ? addToCart(product) : navigate('/cart')} className="flex mx-2 my-2 justify-center items-center py-2 bg-pink-300 hover:bg-pink-400 rounded-3xl">
                                     Add to cart
                                 </button>
-                                <NavLink
-                                    to='/checkout'
-                                    className="flex mx-2 my-2 justify-center items-center py-2 bg-blue-300 hover:bg-blue-400 rounded-3xl"
-                                >
-                                    Buy Now
-                                </NavLink>
+                                
                             </div>
 
                             <p className="text-gray-700 mb-4">{product.description}</p>
