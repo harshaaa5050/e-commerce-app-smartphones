@@ -58,6 +58,7 @@ const Checkout = () => {
         const newOrder = {
             id: Date.now().toString(),
             userId: localStorage.getItem("user"),
+            username: localStorage.getItem("username"),
             paymentMethod: paymentMethod,
             paymentDetails: paymentDetails,
             address: formData,
