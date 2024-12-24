@@ -1,10 +1,31 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
-import { AdminContext } from '../../contexts/AdminContext';
+import { blockUser, fetchUsers } from '../../api/userApi';
 
 const Users = () => {
 
-    const {allusers} = useContext(AdminContext);
+    const [allUsers, setAllUsers] = useState([]);
+    const [toggleBlock, setToggleBlock] = useState(false);
+
+    useEffect(() => {
+        const userFetch = async () => {
+            const {data: response} =await fetchUsers();
+            setAllUsers(response);
+        }
+        userFetch();
+    },[toggleBlock]);
+
+    const handleToggle = (id) => {
+        const userBlock = async () => {
+            try {
+                await blockUser(id);
+                setToggleBlock(!toggleBlock);
+            } catch (error) {
+                console.error("Failed to block/unblock user:",error);
+            }
+        }
+        userBlock();
+    }
 
     return (
         <>
@@ -20,7 +41,7 @@ const Users = () => {
                         />
                     </div>
                     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                        <table className="table-auto w-full text-left border-collapse">
+                        <table className="table-auto w-full text-center border-collapse">
                             <thead className="bg-gray-200 text-gray-700">
                                 <tr>
                                     <th className="p-3">User Id</th>
@@ -30,15 +51,15 @@ const Users = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {allusers.map((users, index) => (
+                                {allUsers.map((users, index) => (
                                     (users.role === "user") &&
                                     <tr key={index} className="border-t">
                                         <td className="p-3">{users.id}</td>
                                         <td className="p-3">{users.username}</td>
                                         <td className="p-3">{users.email}</td>
-                                        <td className="p-3">
-                                            <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
-                                                block
+                                        <td className="p-3 flex items-center justify-center">
+                                            <button onClick={() => handleToggle(users.id)} className="px-4 py-2 w-20 bg-red-500 text-white rounded-md hover:bg-red-600 flex justify-center items-center">
+                                                {users.block ? "Unblock" : "Block"}
                                             </button>
                                         </td>
                                     </tr>
