@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import { NavLink } from 'react-router-dom';
-import { fetchAllProducts } from '../../api/productApi';
+import { AdminContext } from '../../contexts/AdminContext';
 
 const ManageProducts = () => {
-  // Example smartphone data
-  const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetchAllProducts();
-        setProducts(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchProducts();
-  },[]);
+  const {allproducts} = useContext(AdminContext);
 
   return (
     <>
@@ -34,7 +22,7 @@ const ManageProducts = () => {
             </NavLink>
           </div>
           <div className="overflow-x-auto">
-            <table className="min-w-full text-left border-collapse">
+            <table className="min-w-full text-center  border-collapse">
               <thead className="bg-gray-200">
                 <tr>
                   <th className="py-2 px-4 border">Product ID</th>
@@ -45,12 +33,12 @@ const ManageProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {allproducts.map((product) => (
                   <tr key={product.id}>
                     <td className="py-2 px-4 border">{product.id}</td>
                     <td className="py-2 px-4 border"><img src={product.image} alt="product" className='w-14' /></td>
                     <td className="py-2 px-4 border">{product.name}</td>
-                    <td className="py-2 px-4 border">{product.price}</td>
+                    <td className="py-2 px-4 border">₹{product.price}</td>
                     <td className="py-2 px-4 border text-center">
                       {/* Edit and Delete Buttons */}
                       <button className="bg-green-500 text-white py-1 px-2 rounded shadow hover:bg-green-600 mr-2">

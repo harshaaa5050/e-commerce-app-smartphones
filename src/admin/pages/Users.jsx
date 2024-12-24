@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
-import { fetchUsers } from '../../api/userApi';
+import { AdminContext } from '../../contexts/AdminContext';
 
 const Users = () => {
 
-    const [allUsers, setAllUsers] = useState([]);
-    
-      useEffect(() => {
-        const getUsers = async () => {
-          try {
-            const response = await fetchUsers();
-            setAllUsers(response.data);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        getUsers();
-      },[]);
+    const {allusers} = useContext(AdminContext);
 
     return (
         <>
@@ -42,11 +30,12 @@ const Users = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {allUsers.map((allusers) => (
-                                    <tr key={allusers.id} className="border-t">
-                                        <td className="p-3">{allusers.id}</td>
-                                        <td className="p-3">{allusers.username}</td>
-                                        <td className="p-3">{allusers.email}</td>
+                                {allusers.map((users, index) => (
+                                    (users.role === "user") &&
+                                    <tr key={index} className="border-t">
+                                        <td className="p-3">{users.id}</td>
+                                        <td className="p-3">{users.username}</td>
+                                        <td className="p-3">{users.email}</td>
                                         <td className="p-3">
                                             <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
                                                 block
