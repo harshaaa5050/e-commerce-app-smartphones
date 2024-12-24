@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import { NavLink } from 'react-router-dom';
+import { fetchAllProducts } from '../../api/productApi';
 
 const ManageProducts = () => {
   // Example smartphone data
-  const products = [
-    { id: 1, name: 'iPhone 14 Pro Max', price: '₹1,39,900', stock: 15 },
-    { id: 2, name: 'Samsung Galaxy S23 Ultra', price: '₹1,24,999', stock: 20 },
-    { id: 3, name: 'OnePlus 11', price: '₹56,999', stock: 30 },
-    { id: 4, name: 'Google Pixel 8', price: '₹74,999', stock: 25 },
-    { id: 5, name: 'Xiaomi 13 Pro', price: '₹79,999', stock: 10 },
-    { id: 6, name: 'Realme GT 5', price: '₹36,999', stock: 40 },
-    { id: 7, name: 'Vivo X90 Pro', price: '₹84,999', stock: 18 },
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetchAllProducts();
+        setProducts(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchProducts();
+  },[]);
 
   return (
     <>
       <AdminNavbar />
       <div className="p-6 bg-gray-100 min-h-screen">
-        <h1 className="text-2xl font-bold mb-6">Products</h1>
+        <h1 className="text-2xl font-bold mb-6 pt-16">Products</h1>
 
         {/* Products Section */}
         <div className="bg-white shadow-md rounded-lg p-4">
@@ -33,9 +38,9 @@ const ManageProducts = () => {
               <thead className="bg-gray-200">
                 <tr>
                   <th className="py-2 px-4 border">Product ID</th>
+                  <th className="py-2 px-4 border">Product Image</th>
                   <th className="py-2 px-4 border">Name</th>
                   <th className="py-2 px-4 border">Price</th>
-                  <th className="py-2 px-4 border">Stock</th>
                   <th className="py-2 px-4 border text-center">Actions</th>
                 </tr>
               </thead>
@@ -43,9 +48,9 @@ const ManageProducts = () => {
                 {products.map((product) => (
                   <tr key={product.id}>
                     <td className="py-2 px-4 border">{product.id}</td>
+                    <td className="py-2 px-4 border"><img src={product.image} alt="product" className='w-14' /></td>
                     <td className="py-2 px-4 border">{product.name}</td>
                     <td className="py-2 px-4 border">{product.price}</td>
-                    <td className="py-2 px-4 border">{product.stock}</td>
                     <td className="py-2 px-4 border text-center">
                       {/* Edit and Delete Buttons */}
                       <button className="bg-green-500 text-white py-1 px-2 rounded shadow hover:bg-green-600 mr-2">
