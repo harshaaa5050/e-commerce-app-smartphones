@@ -69,7 +69,7 @@ const ProductDetails = () => {
                             <p className="text-yellow-500 text-lg mb-4">Rating: {product.rating} ⭐</p>
 
                             <div className='flex w-96 flex-col mt-4 -ml-2'>
-                                <button onClick={() => user ? addToCart(product) : navigate('/login')} className="flex mx-2 my-2 justify-center items-center py-2 bg-pink-300 hover:bg-pink-400 rounded-3xl">
+                                <button onClick={() => user ? addToCart(product) : navigate('/cart')} className="flex mx-2 my-2 justify-center items-center py-2 bg-pink-300 hover:bg-pink-400 rounded-3xl">
                                     Add to cart
                                 </button>
                                 <NavLink
