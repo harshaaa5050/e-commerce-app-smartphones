@@ -1,11 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import { NavLink } from 'react-router-dom';
 import { AdminContext } from '../../contexts/AdminContext';
+import { deleteProduct } from '../../api/productApi';
 
 const ManageProducts = () => {
 
-  const {allproducts} = useContext(AdminContext);
+  const {allProducts, setAllProducts} = useContext(AdminContext);
+
+  const handleDelete = async (id) => {
+    const {data: response} = await deleteProduct(id);
+    setAllProducts(response);
+  }
+
 
   return (
     <>
@@ -33,7 +40,7 @@ const ManageProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                {allproducts.map((product) => (
+                {allProducts.map((product) => (
                   <tr key={product.id}>
                     <td className="py-2 px-4 border">{product.id}</td>
                     <td className="py-2 px-4 border"><img src={product.image} alt="product" className='w-14' /></td>
@@ -44,7 +51,7 @@ const ManageProducts = () => {
                       <button className="bg-green-500 text-white py-1 px-2 rounded shadow hover:bg-green-600 mr-2">
                         Edit
                       </button>
-                      <button className="bg-red-600 text-white py-1 px-2 rounded shadow hover:bg-red-700">
+                      <button onClick={() => handleDelete(product.id)} className="bg-red-600 text-white py-1 px-2 rounded shadow hover:bg-red-700">
                         Delete
                       </button>
                     </td>
