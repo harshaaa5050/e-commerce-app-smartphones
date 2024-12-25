@@ -1,16 +1,22 @@
 import React, { useContext } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AdminContext } from '../../contexts/AdminContext';
 import { deleteProduct } from '../../api/productApi';
 
 const ManageProducts = () => {
 
-  const {allProducts, setAllProducts} = useContext(AdminContext);
+  const { allProducts, setAllProducts } = useContext(AdminContext);
+  const navigate = useNavigate();
 
   const handleDelete = async (id) => {
-    const {data: response} = await deleteProduct(id);
+    const { data: response } = await deleteProduct(id);
     setAllProducts(response);
+  }
+
+  const handleEdit = (id) => {
+    localStorage.setItem('productId', id);
+    navigate('/admin/editproducts');
   }
 
 
@@ -48,7 +54,7 @@ const ManageProducts = () => {
                     <td className="py-2 px-4 border">₹{product.price}</td>
                     <td className="py-2 px-4 border text-center">
                       {/* Edit and Delete Buttons */}
-                      <button className="bg-green-500 text-white py-1 px-2 rounded shadow hover:bg-green-600 mr-2">
+                      <button onClick={() => handleEdit(product.id)} className="bg-green-500 text-white py-1 px-2 rounded shadow hover:bg-green-600 mr-2">
                         Edit
                       </button>
                       <button onClick={() => handleDelete(product.id)} className="bg-red-600 text-white py-1 px-2 rounded shadow hover:bg-red-700">
