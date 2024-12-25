@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AdminNavbar from '../../components/AdminNavbar';
 import { useNavigate } from "react-router-dom";
 import { addNewProduct, fetchAllProducts } from "../../api/productApi";
+import { AdminContext } from "../../contexts/AdminContext";
 
 const AddProducts = () => {
     const navigate = useNavigate();
-    const [allProducts, setAllProducts] = useState([]);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await fetchAllProducts();
-                setAllProducts(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchProducts();
-    }, []);
+    const {setAllProducts} = useContext(AdminContext);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -44,7 +34,7 @@ const AddProducts = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newProduct = {
-            id: allProducts.length +1,
+            id: (Date.now()).toString(),
             name: formData.name,
             brand: formData.brand,
             price: formData.price,
@@ -61,7 +51,8 @@ const AddProducts = () => {
                 os: formData.os
             }
         }
-        await addNewProduct(newProduct);
+        const {data: response} = await addNewProduct(newProduct);
+        setAllProducts((prevProducts) => [...prevProducts, response]);
         setTimeout(() => navigate("/admin/manageproducts"), 1000);
     };
 
@@ -184,7 +175,7 @@ const AddProducts = () => {
                                         name={field}
                                         value={formData[field]}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500"
                                         placeholder={`Enter ${field}`}
                                         required
                                     />
