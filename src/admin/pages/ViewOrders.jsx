@@ -4,7 +4,7 @@ import { AdminContext } from '../../contexts/AdminContext';
 
 const ViewOrders = () => {
 
-  const {allorders} = useContext(AdminContext);
+  const {allOrders} = useContext(AdminContext);
 
   return (
     <>
@@ -29,11 +29,10 @@ const ViewOrders = () => {
                   <th className="p-3">Quantity</th>
                   <th className="p-3">Total</th>
                   <th className="p-3">Status</th>
-                  <th className="p-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {allorders.map((order) => (
+                {allOrders.map((order) => (
                   order.products.map((product) => (
                     <tr key={order.id} className="border-t">
                       <td className="p-3">{order.id}</td>
@@ -42,11 +41,6 @@ const ViewOrders = () => {
                       <td className="p-3">{product.quantity}</td>
                       <td className="p-3">₹{order.total}</td>
                       <td className="p-3">{order.orderStatus}</td>
-                      <td className="p-3">
-                        <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
-                          Cancel
-                        </button>
-                      </td>
                     </tr>
                   ))
                 ))}
