@@ -3,13 +3,33 @@ import AdminNavbar from '../../components/AdminNavbar';
 import { AdminContext } from '../../contexts/AdminContext';
 
 const Dashboard = () => {
+    
+        const {totalProducts, totalOrders, totalUsers, totalRevenue} = useContext(AdminContext);
+        const [orders, setOrders] = useState(0);
+        const [products, setProducts] = useState(0);
+        const [users, setUsers] = useState(0);
+        const [revenue, setRevenue] = useState(0);
 
-    const {orders} = useContext(AdminContext);
-    const {products} = useContext(AdminContext);
-    const {users} = useContext(AdminContext);
-    const {revenue} = useContext(AdminContext);
+        useEffect(() => {
+            const fetchAllData = async () => {
+                try{
+                    const totalusers = await totalUsers();
+                    setUsers(totalusers);
 
+                    const totalproducts = await totalProducts();
+                    setProducts(totalproducts);
 
+                    const totalorders = await totalOrders();
+                    setOrders(totalorders);
+
+                    const totalrevenue = await totalRevenue();
+                    setRevenue(totalrevenue);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            fetchAllData();
+        },[]);
 
     return (
         <>

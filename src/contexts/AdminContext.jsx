@@ -7,54 +7,11 @@ export const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
 
-    const [orders, setOrders] = useState(0);
-    const [products, setProducts] = useState(0);
-    const [users, setUsers] = useState(0);
-    const [revenue, setRevenue] = useState(0);
     const [allProducts, setAllProducts] = useState([]);
     const [allOrders, setAllOrders] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
 
     useEffect(() => {
-        const totalProducts = async () => {
-            try {
-                const response = await fetchAllProducts();
-                setProducts(response.data.length);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        totalProducts();
-
-        const totalOrders = async () => {
-            try {
-                const response = await fetchAllOrders();
-                setOrders(response.data.length);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        totalOrders();
-
-        const totalUsers = async () => {
-            try {
-                const response = await fetchUsers();
-                setUsers(response.data.length);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        totalUsers();
-
-        const totalRevenue = async () => {
-            try {
-                const response = await fetchAllOrders();
-                setRevenue(response.data.reduce((total, order) => total + order.total, 0));
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        totalRevenue();
 
         const fetchProducts = async () =>{
             try {
@@ -88,9 +45,45 @@ export const AdminProvider = ({ children }) => {
 
     }, []);
 
+    const totalProducts = async () => {
+        try {
+            const {data: users} = await fetchAllProducts();
+            return users.length;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const totalOrders = async () => {
+        try {
+            const {data: orders} = await fetchAllOrders();
+            return orders.length;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const totalUsers = async () => {
+        try {
+            const {data: users} = await fetchUsers();
+            return users.length;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const totalRevenue = async () => {
+        try {
+            const {data: orders} = await fetchAllOrders();
+            return orders.reduce((total, order) => total + order.total, 0);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return (
-        <AdminContext.Provider value={{ orders, products, users, revenue, allProducts,setAllProducts, allOrders, allUsers }} >
+        <AdminContext.Provider value={{totalProducts, totalOrders, totalUsers, totalRevenue, allProducts,setAllProducts, allOrders, allUsers }} >
             {children}
         </AdminContext.Provider>
     )
