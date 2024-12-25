@@ -11,9 +11,9 @@ export const AdminProvider = ({ children }) => {
     const [products, setProducts] = useState(0);
     const [users, setUsers] = useState(0);
     const [revenue, setRevenue] = useState(0);
-    const [allproducts, setAllproducts] = useState([]);
-    const [allorders, setAllorders] = useState([]);
-    const [allusers, setAllusers] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
+    const [allOrders, setAllOrders] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
 
     useEffect(() => {
         const totalProducts = async () => {
@@ -56,41 +56,41 @@ export const AdminProvider = ({ children }) => {
         }
         totalRevenue();
 
-        const allProducts = async () =>{
+        const fetchProducts = async () =>{
             try {
                 const response = await fetchAllProducts();
-                setAllproducts(response.data);
+                setAllProducts(response.data);
             } catch (error) {
                 console.log(error);
             }
         }
-        allProducts();
+        fetchProducts();
 
-        const allOrders = async () =>{
+        const fetchOrders = async () =>{
             try {
                 const response = await fetchAllOrders();
-                setAllorders(response.data);
+                setAllOrders(response.data);
             } catch (error) {
                 console.log(error);
             }
         }
-        allOrders();
+        fetchOrders();
 
-        const allUsers = async () =>{
+        const fetchAllUsers = async () =>{
             try {
                 const response = await fetchUsers();
-                setAllusers(response.data);
+                setAllUsers(response.data);
             } catch (error) {
                 console.log(error);
             }
         }
-        allUsers();
+        fetchAllUsers();
 
     }, []);
 
 
     return (
-        <AdminContext.Provider value={{ orders, products, users, revenue, allproducts, allorders, allusers }} >
+        <AdminContext.Provider value={{ orders, products, users, revenue, allProducts,setAllProducts, allOrders, allUsers }} >
             {children}
         </AdminContext.Provider>
     )
