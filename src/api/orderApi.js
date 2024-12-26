@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ORDER_URL = "http://localhost:5000/orders";
+const ORDER_URL = "https://e-commerce-app-smartphones-server.onrender.com/orders";
 
 export const addNewOrder = (newOrder) => {
     return axios.post(ORDER_URL, newOrder);
